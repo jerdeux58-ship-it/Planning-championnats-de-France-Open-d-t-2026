@@ -151,6 +151,38 @@
   .hl-kamboua-ec{background:var(--kamboua-ec); border-left-color:var(--kamboua);}
   .hl-kamboua-ec .tag{color:var(--kamboua); border:1.5px solid var(--kamboua);}
 
+  /* EC partagée entre deux nageurs (même épreuve, même jour) */
+  .ev.shared-ec{
+    border-left-width:5px;border-left-style:dashed;
+    border-image:linear-gradient(180deg, var(--degrave) 50%, var(--markiewicz) 50%) 1;
+    background:linear-gradient(90deg, var(--degrave-ec) 0%, var(--degrave-ec) 50%, var(--markiewicz-ec) 50%, var(--markiewicz-ec) 100%);
+  }
+  .ev.shared-ec .tags{display:flex;gap:5px;flex-wrap:wrap;}
+  .ev.shared-ec .tag.t-degrave{color:var(--degrave);border:1.5px solid var(--degrave);background:#fff;}
+  .ev.shared-ec .tag.t-markiewicz{color:var(--markiewicz);border:1.5px solid var(--markiewicz);background:#fff;}
+
+  /* relais mixte : ordre des relayeurs */
+  .relay.hl .legs{
+    display:flex;flex-wrap:wrap;gap:5px;margin-top:5px;
+  }
+  .relay.hl .leg{
+    font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:999px;color:#fff;
+  }
+  .leg-degrave{background:var(--degrave);}
+  .leg-markiewicz{background:var(--markiewicz);}
+  .leg-couraud{background:var(--couraud);}
+  .leg-kamboua{background:var(--kamboua);}
+
+  /* épreuve demandée, en attente de validation officielle */
+  .ev.pending{
+    border-left-style:dotted;
+    background:repeating-linear-gradient(45deg, var(--couraud-ec), var(--couraud-ec) 7px, #fff 7px, #fff 14px);
+  }
+  .ev.pending .tag{
+    background:#fff;color:var(--couraud);border:1.5px dashed var(--couraud);
+  }
+  .ev.pending .star{color:var(--couraud);font-weight:800;}
+
   footer{max-width:1500px;margin:22px auto 0;color:#5a6b78;font-size:12px;padding:0 4px;}
 
   /* --- filtrage vue perso --- */
@@ -171,7 +203,7 @@
   <header>
     <div class="eyebrow">CN Nevers</div>
     <h1>Open d'Été 2026 — Canet-en-Roussillon</h1>
-    <div class="sub">17 → 22 juillet 2026 · 4 nageurs qualifiés CN Nevers · Couleur pleine = qualificative · Couleur dégradée pointillée = complémentaire (EC) · Violet = relais d'équipe mixte</div>
+    <div class="sub">17 → 22 juillet 2026 · Couleur pleine = qualificative · Couleur dégradée pointillée = complémentaire (EC) · Hachuré + * = demande en attente de validation · Violet = relais d'équipe mixte</div>
     <div class="legend">
       <button class="chip chip-tab active" data-tab="all"><span class="dot" style="background:#fff"></span>Vue globale</button>
       <button class="chip chip-tab" data-tab="degrave"><span class="dot" style="background:var(--degrave)"></span>DEGRAVE Circé</button>
@@ -217,7 +249,13 @@
         </div>
         <div class="ev plain"><span class="label">100 papillon <span class="sex">♀</span></span></div>
         <div class="ev plain"><span class="label">50 dos <span class="sex">♂</span></span></div>
-        <div class="ev plain"><span class="label">100 brasse <span class="sex">♀</span></span></div>
+        <div class="ev ec shared-ec" data-swimmer="degrave markiewicz">
+          <span class="label">100 brasse <span class="sex">♀</span></span>
+          <span class="tags">
+            <span class="tag t-degrave">DEGRAVE · EC</span>
+            <span class="tag t-markiewicz">MARKIEWICZ · EC</span>
+          </span>
+        </div>
         <div class="ev hl-couraud" data-swimmer="couraud">
           <span class="label">200 nage libre <span class="sex">♂</span></span>
           <span class="tag">COURAUD</span>
@@ -240,11 +278,14 @@
           <span class="label">200 4 nages <span class="sex">♀</span></span>
           <span class="tag">MARKIEWICZ · EC</span>
         </div>
-        <div class="ev plain"><span class="label">200 brasse <span class="sex">♂</span></span></div>
+        <div class="ev ec hl-kamboua-ec" data-swimmer="kamboua">
+          <span class="label">200 brasse <span class="sex">♂</span></span>
+          <span class="tag">KAMBOUA · EC</span>
+        </div>
         <div class="ev plain"><span class="label">100 dos <span class="sex">♀</span></span></div>
-        <div class="ev ec hl-couraud-ec" data-swimmer="couraud">
-          <span class="label">1500 nage libre <span class="sex">♂</span> <span class="note">séries, FA/B le lendemain</span></span>
-          <span class="tag">COURAUD · EC</span>
+        <div class="ev pending" data-swimmer="couraud">
+          <span class="label">1500 nage libre <span class="sex">♂</span> <span class="star">*</span> <span class="note">séries, FA/B le lendemain</span></span>
+          <span class="tag">COURAUD *</span>
         </div>
       </div>
       <div class="relay">Relais 4 x 100 4 nages ♀ · 4 x 100 nage libre ♂</div>
@@ -265,14 +306,20 @@
         </div>
         <div class="ev plain"><span class="label">200 brasse <span class="sex">♀</span></span></div>
         <div class="ev plain"><span class="label">100 dos <span class="sex">♂</span></span></div>
-        <div class="ev ec hl-couraud-ec" data-swimmer="couraud">
-          <span class="label">1500 nage libre <span class="sex">♂</span> <span class="note">finale A/B de la veille</span></span>
-          <span class="tag">COURAUD · EC</span>
+        <div class="ev pending" data-swimmer="couraud">
+          <span class="label">1500 nage libre <span class="sex">♂</span> <span class="star">*</span> <span class="note">finale A/B de la veille</span></span>
+          <span class="tag">COURAUD *</span>
         </div>
       </div>
       <div class="relay">Relais 4 x 100 nage libre ♂</div>
       <div class="relay hl" data-team="degrave markiewicz couraud kamboua">
         Relais 4 x 100 nage libre MIXTE (soir) <span class="tag">ÉQUIPE</span>
+        <div class="legs">
+          <span class="leg leg-couraud">1. Couraud</span>
+          <span class="leg leg-kamboua">2. Kamboua</span>
+          <span class="leg leg-degrave">3. Degrave</span>
+          <span class="leg leg-markiewicz">4. Markiewicz</span>
+        </div>
       </div>
     </div>
 
@@ -295,6 +342,12 @@
       <div class="relay">Relais 4 x 100 4 nages ♂</div>
       <div class="relay hl" data-team="degrave markiewicz couraud kamboua">
         Relais 4 x 100 4 nages MIXTE (soir) <span class="tag">ÉQUIPE</span>
+        <div class="legs">
+          <span class="leg leg-markiewicz">1. Markiewicz</span>
+          <span class="leg leg-degrave">2. Degrave</span>
+          <span class="leg leg-kamboua">3. Kamboua</span>
+          <span class="leg leg-couraud">4. Couraud</span>
+        </div>
       </div>
     </div>
 
@@ -320,7 +373,7 @@
   </div>
 
   <footer>
-    Épreuves qualificatives (minima ou ranking) en couleur pleine · Épreuves complémentaires (EC) en couleur dégradée avec bordure pointillée · Relais mixte d'équipe en violet, engageant les 4 nageurs.
+    Épreuves qualificatives (minima ou ranking) en couleur pleine · Épreuves complémentaires (EC) en couleur dégradée avec bordure pointillée · Épreuve hachurée avec * : demande d'ajout envoyée, en attente de validation officielle (1500 NL Couraud) · Relais mixte d'équipe en violet, engageant les 4 nageurs.
   </footer>
 </div>
 
