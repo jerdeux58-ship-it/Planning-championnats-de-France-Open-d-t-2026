@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Planning Open d'Été 2026 - Canet-en-Roussillon</title>
+<style>
+  :root{
+    --bg:#0b2942;
+    --panel:#ffffff;
+    --ink:#0b2942;
+    --muted:#8a97a3;
+    --line:#dfe6ec;
+    --degrave:#e63946;
+    --degrave-l:#fbdadd;
+    --degrave-ec:#fdf1f2;
+    --markiewicz:#2a9d8f;
+    --markiewicz-l:#d3ece9;
+    --markiewicz-ec:#eaf6f4;
+    --couraud:#f4a100;
+    --couraud-l:#fdeccc;
+    --couraud-ec:#fff7e8;
+    --kamboua:#4361ee;
+    --kamboua-l:#dde2fc;
+    --kamboua-ec:#eef1fd;
+    --equipe:#6a4c93;
+    --equipe-l:#e5dcf0;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Segoe UI', Roboto, Arial, sans-serif;
+    background:linear-gradient(180deg,var(--bg) 0%, #123a5e 260px, #eef2f5 260px);
+    color:var(--ink);
+    padding:24px 16px 60px;
+  }
+  .wrap{max-width:1500px;margin:0 auto;}
+  header{color:#fff;padding:6px 4px 18px;}
+  header .eyebrow{
+    text-transform:uppercase;letter-spacing:2px;font-size:12px;
+    color:#9fc3e0;font-weight:600;
+  }
+  header h1{margin:6px 0 4px;font-size:28px;font-weight:800;}
+  header .sub{font-size:14px;color:#c7dcec;}
+  .legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;}
+  .chip{
+    display:flex;align-items:center;gap:8px;
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.18);
+    padding:8px 14px;border-radius:999px;font-size:13px;color:#fff;
+  }
+  .chip-tab{
+    appearance:none;cursor:pointer;font-family:inherit;font-weight:700;
+    transition:all .15s ease;
+  }
+  .chip-tab:hover{background:rgba(255,255,255,0.18);}
+  .chip-tab.active{background:#fff;color:var(--bg);border-color:#fff;}
+  .chip-tab.active .dot{background:var(--bg) !important;}
+  .chip-tab[data-tab="degrave"].active{background:var(--degrave);color:#fff;border-color:var(--degrave);}
+  .chip-tab[data-tab="degrave"].active .dot{background:#fff !important;}
+  .chip-tab[data-tab="markiewicz"].active{background:var(--markiewicz);color:#fff;border-color:var(--markiewicz);}
+  .chip-tab[data-tab="markiewicz"].active .dot{background:#fff !important;}
+  .chip-tab[data-tab="couraud"].active{background:var(--couraud);color:#fff;border-color:var(--couraud);}
+  .chip-tab[data-tab="couraud"].active .dot{background:#fff !important;}
+  .chip-tab[data-tab="kamboua"].active{background:var(--kamboua);color:#fff;border-color:var(--kamboua);}
+  .chip-tab[data-tab="kamboua"].active .dot{background:#fff !important;}
+  .dot{width:12px;height:12px;border-radius:50%;flex:none;}
+
+  /* onglets fusionnés dans la légende (voir .chip-tab) */
+
+  /* --- planning en grille : 2 colonnes, jours par paires --- */
+  .scroller{
+    padding-bottom:10px;
+    margin-top:6px;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:16px;
+  }
+  @media (max-width:760px){
+    .grid{grid-template-columns:1fr;}
+  }
+  .day{
+    background:var(--panel);
+    border-radius:14px;
+    box-shadow:0 1px 3px rgba(11,41,66,0.08), 0 8px 20px rgba(11,41,66,0.06);
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    width:100%;
+  }
+  .day-head{
+    padding:14px 16px;border-bottom:2px solid var(--line);
+    display:flex;flex-direction:column;gap:2px;
+  }
+  .day-head .name{font-weight:800;font-size:15px;text-transform:capitalize;}
+  .day-head .date{font-size:12px;color:var(--muted);}
+  .events{padding:10px 0;flex:1;}
+  .ev{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:8px;padding:9px 16px;font-size:13.5px;border-left:5px solid transparent;
+  }
+  .ev .label{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+  .ev .sex{font-size:11px;color:var(--muted);}
+  .ev.plain{color:#b7bfc6;}
+  .ev.plain .sex{color:#c9cfd4;}
+  .ev .tag{
+    font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:999px;
+    white-space:nowrap;color:#fff;
+  }
+  .ev .note{font-size:10.5px;font-style:italic;color:var(--muted);margin-left:2px;}
+  .relay{
+    padding:9px 16px;font-size:12px;color:var(--muted);font-style:italic;
+    border-top:1px dashed var(--line);
+  }
+  .relay.hl{
+    background:var(--equipe-l);color:var(--equipe);font-weight:700;font-style:normal;
+    border-top:none;
+  }
+  .relay.hl .tag{
+    display:inline-block;margin-left:6px;font-size:9.5px;font-weight:700;
+    padding:2px 7px;border-radius:999px;background:var(--equipe);color:#fff;
+    font-style:normal;
+  }
+  .rest{
+    padding:16px;font-size:12px;color:var(--muted);font-style:italic;text-align:center;
+  }
+
+  /* qualif = couleur pleine */
+  .hl-degrave{background:var(--degrave-l); border-left-color:var(--degrave);}
+  .hl-degrave .tag{background:var(--degrave);}
+  .hl-markiewicz{background:var(--markiewicz-l); border-left-color:var(--markiewicz);}
+  .hl-markiewicz .tag{background:var(--markiewicz);}
+  .hl-couraud{background:var(--couraud-l); border-left-color:var(--couraud);}
+  .hl-couraud .tag{background:var(--couraud);}
+  .hl-kamboua{background:var(--kamboua-l); border-left-color:var(--kamboua);}
+  .hl-kamboua .tag{background:var(--kamboua);}
+
+  /* EC = couleur dégradée / bordure pointillée */
+  .ev.ec{border-left-style:dashed;}
+  .ev.ec .tag{background:#fff;font-weight:800;}
+  .hl-degrave-ec{background:var(--degrave-ec); border-left-color:var(--degrave);}
+  .hl-degrave-ec .tag{color:var(--degrave); border:1.5px solid var(--degrave);}
+  .hl-markiewicz-ec{background:var(--markiewicz-ec); border-left-color:var(--markiewicz);}
+  .hl-markiewicz-ec .tag{color:var(--markiewicz); border:1.5px solid var(--markiewicz);}
+  .hl-couraud-ec{background:var(--couraud-ec); border-left-color:var(--couraud);}
+  .hl-couraud-ec .tag{color:var(--couraud); border:1.5px solid var(--couraud);}
+  .hl-kamboua-ec{background:var(--kamboua-ec); border-left-color:var(--kamboua);}
+  .hl-kamboua-ec .tag{color:var(--kamboua); border:1.5px solid var(--kamboua);}
+
+  /* EC partagée entre deux nageurs (même épreuve, même jour) */
+  .ev.shared-ec{
+    border-left-width:5px;border-left-style:dashed;
+    border-image:linear-gradient(180deg, var(--degrave) 50%, var(--markiewicz) 50%) 1;
+    background:linear-gradient(90deg, var(--degrave-ec) 0%, var(--degrave-ec) 50%, var(--markiewicz-ec) 50%, var(--markiewicz-ec) 100%);
+  }
+  .ev.shared-ec .tags{display:flex;gap:5px;flex-wrap:wrap;}
+  .ev.shared-ec .tag.t-degrave{color:var(--degrave);border:1.5px solid var(--degrave);background:#fff;}
+  .ev.shared-ec .tag.t-markiewicz{color:var(--markiewicz);border:1.5px solid var(--markiewicz);background:#fff;}
+
+  /* relais mixte : ordre des relayeurs */
+  .relay.hl .legs{
+    display:flex;flex-wrap:wrap;gap:5px;margin-top:5px;
+  }
+  .relay.hl .leg{
+    font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:999px;color:#fff;
+  }
+  .leg-degrave{background:var(--degrave);}
+  .leg-markiewicz{background:var(--markiewicz);}
+  .leg-couraud{background:var(--couraud);}
+  .leg-kamboua{background:var(--kamboua);}
+
+  /* épreuve demandée, en attente de validation officielle */
+  .ev.pending{
+    border-left-style:dotted;
+    background:repeating-linear-gradient(45deg, var(--couraud-ec), var(--couraud-ec) 7px, #fff 7px, #fff 14px);
+  }
+  .ev.pending .tag{
+    background:#fff;color:var(--couraud);border:1.5px dashed var(--couraud);
+  }
+  .ev.pending .star{color:var(--couraud);font-weight:800;}
+
+  footer{max-width:1500px;margin:22px auto 0;color:#5a6b78;font-size:12px;padding:0 4px;}
+
+  /* --- filtrage vue perso --- */
+  body.view-degrave .ev[data-swimmer]:not([data-swimmer~="degrave"]){display:none;}
+  body.view-markiewicz .ev[data-swimmer]:not([data-swimmer~="markiewicz"]){display:none;}
+  body.view-couraud .ev[data-swimmer]:not([data-swimmer~="couraud"]){display:none;}
+  body.view-kamboua .ev[data-swimmer]:not([data-swimmer~="kamboua"]){display:none;}
+  body:not(.view-all) .ev:not([data-swimmer]){display:none;}
+  body:not(.view-all) .relay:not(.hl){display:none;}
+  body.view-degrave .relay.hl:not([data-team~="degrave"]),
+  body.view-markiewicz .relay.hl:not([data-team~="markiewicz"]),
+  body.view-couraud .relay.hl:not([data-team~="couraud"]),
+  body.view-kamboua .relay.hl:not([data-team~="kamboua"]){display:none;}
+</style>
+</head>
+<body class="view-all">
+<div class="wrap">
+  <header>
+    <div class="eyebrow">CN Nevers</div>
+    <h1>Open d'Été 2026 — Canet-en-Roussillon</h1>
+    <div class="sub">17 → 22 juillet 2026 · Couleur pleine = qualificative · Couleur dégradée pointillée = complémentaire (EC) · Hachuré + * = demande en attente de validation · Violet = relais d'équipe mixte</div>
+    <div class="legend">
+      <button class="chip chip-tab active" data-tab="all"><span class="dot" style="background:#fff"></span>Vue globale</button>
+      <button class="chip chip-tab" data-tab="degrave"><span class="dot" style="background:var(--degrave)"></span>DEGRAVE Circé</button>
+      <button class="chip chip-tab" data-tab="markiewicz"><span class="dot" style="background:var(--markiewicz)"></span>MARKIEWICZ Lucie</button>
+      <button class="chip chip-tab" data-tab="couraud"><span class="dot" style="background:var(--couraud)"></span>COURAUD Gabriel</button>
+      <button class="chip chip-tab" data-tab="kamboua"><span class="dot" style="background:var(--kamboua)"></span>KAMBOUA Nabil</button>
+    </div>
+  </header>
+
+  <div class="scroller">
+  <div class="grid">
+
+    <!-- VENDREDI 17 -->
+    <div class="day">
+      <div class="day-head"><span class="name">Vendredi 17 juillet</span><span class="date">J1</span></div>
+      <div class="events">
+        <div class="ev hl-markiewicz" data-swimmer="markiewicz">
+          <span class="label">400 4 nages <span class="sex">♀</span></span>
+          <span class="tag">MARKIEWICZ</span>
+        </div>
+        <div class="ev plain"><span class="label">100 papillon <span class="sex">♂</span></span></div>
+        <div class="ev hl-markiewicz" data-swimmer="markiewicz">
+          <span class="label">50 dos <span class="sex">♀</span></span>
+          <span class="tag">MARKIEWICZ</span>
+        </div>
+        <div class="ev plain"><span class="label">100 brasse <span class="sex">♂</span></span></div>
+        <div class="ev plain"><span class="label">200 nage libre <span class="sex">♀</span></span></div>
+        <div class="ev hl-couraud" data-swimmer="couraud">
+          <span class="label">800 nage libre <span class="sex">♂</span> <span class="note">séries, FA/B le lendemain</span></span>
+          <span class="tag">COURAUD</span>
+        </div>
+      </div>
+      <div class="relay">Relais 4 x 200 nage libre ♂/♀</div>
+    </div>
+
+    <!-- SAMEDI 18 -->
+    <div class="day">
+      <div class="day-head"><span class="name">Samedi 18 juillet</span><span class="date">J2</span></div>
+      <div class="events">
+        <div class="ev hl-kamboua" data-swimmer="kamboua">
+          <span class="label">400 4 nages <span class="sex">♂</span></span>
+          <span class="tag">KAMBOUA</span>
+        </div>
+        <div class="ev plain"><span class="label">100 papillon <span class="sex">♀</span></span></div>
+        <div class="ev plain"><span class="label">50 dos <span class="sex">♂</span></span></div>
+        <div class="ev ec shared-ec" data-swimmer="degrave markiewicz">
+          <span class="label">100 brasse <span class="sex">♀</span></span>
+          <span class="tags">
+            <span class="tag t-degrave">DEGRAVE · EC</span>
+            <span class="tag t-markiewicz">MARKIEWICZ · EC</span>
+          </span>
+        </div>
+        <div class="ev hl-couraud" data-swimmer="couraud">
+          <span class="label">200 nage libre <span class="sex">♂</span></span>
+          <span class="tag">COURAUD</span>
+        </div>
+        <div class="ev hl-couraud" data-swimmer="couraud">
+          <span class="label">800 nage libre <span class="sex">♂</span> <span class="note">finale A/B de la veille</span></span>
+          <span class="tag">COURAUD</span>
+        </div>
+      </div>
+      <div class="relay">Relais 4 x 100 nage libre ♀ · 4 x 100 4 nages ♂</div>
+    </div>
+
+    <!-- DIMANCHE 19 -->
+    <div class="day">
+      <div class="day-head"><span class="name">Dimanche 19 juillet</span><span class="date">J3</span></div>
+      <div class="events">
+        <div class="ev plain"><span class="label">50 nage libre <span class="sex">♀</span></span></div>
+        <div class="ev plain"><span class="label">50 papillon <span class="sex">♂</span></span></div>
+        <div class="ev ec hl-markiewicz-ec" data-swimmer="markiewicz">
+          <span class="label">200 4 nages <span class="sex">♀</span></span>
+          <span class="tag">MARKIEWICZ · EC</span>
+        </div>
+        <div class="ev ec hl-kamboua-ec" data-swimmer="kamboua">
+          <span class="label">200 brasse <span class="sex">♂</span></span>
+          <span class="tag">KAMBOUA · EC</span>
+        </div>
+        <div class="ev plain"><span class="label">100 dos <span class="sex">♀</span></span></div>
+        <div class="ev pending" data-swimmer="couraud">
+          <span class="label">1500 nage libre <span class="sex">♂</span> <span class="star">*</span> <span class="note">séries, FA/B le lendemain</span></span>
+          <span class="tag">COURAUD *</span>
+        </div>
+      </div>
+      <div class="relay">Relais 4 x 100 4 nages ♀ · 4 x 100 nage libre ♂</div>
+    </div>
+
+    <!-- LUNDI 20 -->
+    <div class="day">
+      <div class="day-head"><span class="name">Lundi 20 juillet</span><span class="date">J4</span></div>
+      <div class="events">
+        <div class="ev plain"><span class="label">50 nage libre <span class="sex">♂</span></span></div>
+        <div class="ev ec hl-degrave-ec" data-swimmer="degrave">
+          <span class="label">50 papillon <span class="sex">♀</span></span>
+          <span class="tag">DEGRAVE · EC</span>
+        </div>
+        <div class="ev ec hl-kamboua-ec" data-swimmer="kamboua">
+          <span class="label">200 4 nages <span class="sex">♂</span></span>
+          <span class="tag">KAMBOUA · EC</span>
+        </div>
+        <div class="ev plain"><span class="label">200 brasse <span class="sex">♀</span></span></div>
+        <div class="ev plain"><span class="label">100 dos <span class="sex">♂</span></span></div>
+        <div class="ev pending" data-swimmer="couraud">
+          <span class="label">1500 nage libre <span class="sex">♂</span> <span class="star">*</span> <span class="note">finale A/B de la veille</span></span>
+          <span class="tag">COURAUD *</span>
+        </div>
+      </div>
+      <div class="relay">Relais 4 x 100 nage libre ♂</div>
+      <div class="relay hl" data-team="degrave markiewicz couraud kamboua">
+        Relais 4 x 100 nage libre MIXTE (soir) <span class="tag">ÉQUIPE</span>
+        <div class="legs">
+          <span class="leg leg-couraud">1. Couraud</span>
+          <span class="leg leg-kamboua">2. Kamboua</span>
+          <span class="leg leg-degrave">3. Degrave</span>
+          <span class="leg leg-markiewicz">4. Markiewicz</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MARDI 21 -->
+    <div class="day">
+      <div class="day-head"><span class="name">Mardi 21 juillet</span><span class="date">J5</span></div>
+      <div class="events">
+        <div class="ev hl-couraud" data-swimmer="couraud">
+          <span class="label">400 nage libre <span class="sex">♂</span></span>
+          <span class="tag">COURAUD</span>
+        </div>
+        <div class="ev hl-markiewicz" data-swimmer="markiewicz">
+          <span class="label">200 dos <span class="sex">♀</span></span>
+          <span class="tag">MARKIEWICZ</span>
+        </div>
+        <div class="ev plain"><span class="label">50 brasse <span class="sex">♂</span></span></div>
+        <div class="ev plain"><span class="label">100 nage libre <span class="sex">♀</span></span></div>
+        <div class="ev plain"><span class="label">200 papillon <span class="sex">♂</span></span></div>
+      </div>
+      <div class="relay">Relais 4 x 100 4 nages ♂</div>
+      <div class="relay hl" data-team="degrave markiewicz couraud kamboua">
+        Relais 4 x 100 4 nages MIXTE (soir) <span class="tag">ÉQUIPE</span>
+        <div class="legs">
+          <span class="leg leg-markiewicz">1. Markiewicz</span>
+          <span class="leg leg-degrave">2. Degrave</span>
+          <span class="leg leg-kamboua">3. Kamboua</span>
+          <span class="leg leg-couraud">4. Couraud</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MERCREDI 22 -->
+    <div class="day">
+      <div class="day-head"><span class="name">Mercredi 22 juillet</span><span class="date">J6</span></div>
+      <div class="events">
+        <div class="ev plain"><span class="label">400 nage libre <span class="sex">♀</span></span></div>
+        <div class="ev plain"><span class="label">200 dos <span class="sex">♂</span></span></div>
+        <div class="ev hl-degrave" data-swimmer="degrave">
+          <span class="label">50 brasse <span class="sex">♀</span></span>
+          <span class="tag">DEGRAVE</span>
+        </div>
+        <div class="ev hl-couraud" data-swimmer="couraud">
+          <span class="label">100 nage libre <span class="sex">♂</span></span>
+          <span class="tag">COURAUD</span>
+        </div>
+        <div class="ev plain"><span class="label">200 papillon <span class="sex">♀</span></span></div>
+      </div>
+    </div>
+
+  </div>
+  </div>
+
+  <footer>
+    Épreuves qualificatives (minima ou ranking) en couleur pleine · Épreuves complémentaires (EC) en couleur dégradée avec bordure pointillée · Épreuve hachurée avec * : demande d'ajout envoyée, en attente de validation officielle (1500 NL Couraud) · Relais mixte d'équipe en violet, engageant les 4 nageurs.
+  </footer>
+</div>
+
+<script>
+  const tabs = document.querySelectorAll('.chip-tab');
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabs.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const tab = btn.getAttribute('data-tab');
+      document.body.className = 'view-' + tab;
+      // gestion des jours de repos en vue perso
+      document.querySelectorAll('.day').forEach(day => {
+        const oldRest = day.querySelector('.rest');
+        if(oldRest) oldRest.remove();
+        if(tab !== 'all'){
+          const visibleEv = Array.from(day.querySelectorAll('.ev')).some(ev => ev.style.display !== 'none' && ev.offsetParent !== null);
+          const visibleRelay = Array.from(day.querySelectorAll('.relay')).some(r => r.offsetParent !== null);
+          if(!visibleEv && !visibleRelay){
+            const rest = document.createElement('div');
+            rest.className = 'rest';
+            rest.textContent = 'Journée de repos';
+            day.querySelector('.events').appendChild(rest);
+          }
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>
